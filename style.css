@@ -1,0 +1,10 @@
+a.btn {
+    display: block;
+    margin-top: 1em;
+}
+
+@media only screen and (min-width: 768px) {
+    a.btn {
+        display: inline-block;
+    }
+}
