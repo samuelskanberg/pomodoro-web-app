@@ -3,19 +3,24 @@ $(document).ready(function() {
 
     // Make sure we get permissions for notifications before running the timer :)
     // We only ask if we haven't already asked
-    if ("Notification" in window) {
-        if (Notification.permission === "default") {
-            Notification.requestPermission().then(function(p) {
-                if(p === 'granted') {
-                    var notification = new Notification("Notifications activated");
-                } else {
-                    console.log('User blocked notifications.');
-                }
-            }).catch(function(err) {
-                console.error(err);
-            });
+    $('a#accept-notifications').click(function(event) {
+        console.log("notification");
+        event.preventDefault();
+        if ("Notification" in window) {
+            if (Notification.permission === "default") {
+                Notification.requestPermission().then(function(p) {
+                    if(p === 'granted') {
+                        $('div#notifications-not-activated-warning').hide();
+                        var notification = new Notification("Notifications activated");
+                    } else {
+                        console.log('User blocked notifications.');
+                    }
+                }).catch(function(err) {
+                    console.error(err);
+                });
+            }
         }
-    }
+    });
 
     function notifyUser(message) {
       // Let's check if the browser supports notifications
