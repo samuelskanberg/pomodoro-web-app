@@ -4,7 +4,7 @@ $(document).ready(function() {
     // Check if we should show a warning that the user has not yet accepted notifications
     if ("Notification" in window) {
         if (Notification.permission === "default") {
-            $("div#notifications-not-activated").css("display", "block");
+            $("div#notifications-not-activated-warning").css("display", "block");
         }
     }
 
@@ -17,7 +17,7 @@ $(document).ready(function() {
             if (Notification.permission === "default") {
                 Notification.requestPermission().then(function(p) {
                     if(p === 'granted') {
-                        $("div#notifications-not-activated").css("display", "none");
+                        $("div#notifications-not-activated-warning").css("display", "none");
                         var notification = new Notification("Notifications activated");
                     } else {
                         console.log('User blocked notifications.');
