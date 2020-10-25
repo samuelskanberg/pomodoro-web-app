@@ -91,7 +91,7 @@ $(document).ready(function() {
         event.preventDefault();
         console.log("Clicked long timer");
         $("div#timer-info").html("Long timer is running...");
-        limit = 10;
+        limit = 25*60;
         timer_done = long_timer_done;
         start_timer();
     });
@@ -100,7 +100,7 @@ $(document).ready(function() {
         event.preventDefault();
         console.log("Clicked short timer");
         $("div#timer-info").html("Short timer is running...");
-        limit = 5;
+        limit = 5*60;
         timer_done = short_timer_done;
         start_timer();
     });
