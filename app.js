@@ -72,12 +72,18 @@ $(document).ready(function() {
         console.log("Long timer done");
         $("div#timer-info").html("Long timer is done"); 
         notifyUser("Long timer is done");
+
+        var audio_element = document.getElementById("timer-sound");
+        audio_element.play();
     }
 
     function short_timer_done() {
         console.log("Short timer done");
         $("div#timer-info").html("Short timer is done"); 
         notifyUser("Short timer is done");
+
+        var audio_element = document.getElementById("timer-sound");
+        audio_element.play();
     }
 
     function start_timer() {
