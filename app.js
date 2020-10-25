@@ -60,7 +60,11 @@ $(document).ready(function() {
 
     function add_seconds() {
         count++;
-        console.log("Add second, count: "+count);
+        var seconds_left = limit-count;
+        var minutes = Math.floor(seconds_left/60);
+        var seconds = seconds_left % 60;
+        var time_string = ("0"+minutes).slice(-2)+":"+("0"+seconds).slice(-2);
+        $('#time').html(time_string);
         if (count >= limit) {
             clearInterval(timer);
             timer_done();
@@ -110,5 +114,16 @@ $(document).ready(function() {
         console.log("Clicked stop timer");
         $("div#timer-info").html("Timer is stopped"); 
         clearInterval(timer);
+    });
+
+    $('#show-time-button').click(function(event) {
+        event.preventDefault();
+        if ($('#time').css('display') == "none") {
+            $(this).text("Hide time");
+            $("#time").css("display", "block");
+        } else {
+            $(this).text("Show time");
+            $("#time").css("display", "none");
+        }
     });
 });
