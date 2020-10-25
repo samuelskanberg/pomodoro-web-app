@@ -55,13 +55,17 @@ $(document).ready(function() {
     var count;
     var timer_done;
 
-    function add_seconds() {
-        count++;
+    function update_time() {
         var seconds_left = limit-count;
         var minutes = Math.floor(seconds_left/60);
         var seconds = seconds_left % 60;
         var time_string = ("0"+minutes).slice(-2)+":"+("0"+seconds).slice(-2);
         $('#time').html(time_string);
+    }
+
+    function add_seconds() {
+        count++;
+        update_time();
         if (count >= limit) {
             clearInterval(timer);
             timer_done();
@@ -86,9 +90,19 @@ $(document).ready(function() {
         audio_element.play();
     }
 
+    function very_short_timer_done() {
+        console.log("Very short timer done");
+        $("div#timer-info").html("Very short timer is done");
+        notifyUser("Very short timer is done");
+
+        var audio_element = document.getElementById("timer-sound");
+        audio_element.play();
+    }
+
     function start_timer() {
         count = 0;
         clearInterval(timer);
+        update_time();
         timer = setInterval(function() {
             add_seconds();
         }, 1000);
@@ -110,10 +124,20 @@ $(document).ready(function() {
         start_timer();
     });
 
+    $('#very-short-timer-button').click(function(event) {
+        event.preventDefault();
+        $("div#timer-info").html("Very short timer is running...");
+        limit = 10;
+        timer_done = very_short_timer_done;
+        start_timer();
+    });
+
     $('#stop-timer-button').click(function(event) {
         event.preventDefault();
         $("div#timer-info").html("Timer is stopped"); 
         clearInterval(timer);
+        count = limit;
+        update_time();
     });
 
     $('#show-time-button').click(function(event) {
