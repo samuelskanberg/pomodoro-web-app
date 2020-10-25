@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    console.log("Page loaded");   
-
     // Check if we should show a warning that the user has not yet accepted notifications
     if ("Notification" in window) {
         if (Notification.permission === "default") {
@@ -11,7 +9,6 @@ $(document).ready(function() {
     // Make sure we get permissions for notifications before running the timer :)
     // We only ask if we haven't already asked
     $('a#accept-notifications').click(function(event) {
-        console.log("notification");
         event.preventDefault();
         if ("Notification" in window) {
             if (Notification.permission === "default") {
@@ -93,7 +90,6 @@ $(document).ready(function() {
 
     $('#long-timer-button').click(function(event) {
         event.preventDefault();
-        console.log("Clicked long timer");
         $("div#timer-info").html("Long timer is running...");
         limit = 25*60;
         timer_done = long_timer_done;
@@ -102,7 +98,6 @@ $(document).ready(function() {
 
     $('#short-timer-button').click(function(event) {
         event.preventDefault();
-        console.log("Clicked short timer");
         $("div#timer-info").html("Short timer is running...");
         limit = 5*60;
         timer_done = short_timer_done;
@@ -111,7 +106,6 @@ $(document).ready(function() {
 
     $('#stop-timer-button').click(function(event) {
         event.preventDefault();
-        console.log("Clicked stop timer");
         $("div#timer-info").html("Timer is stopped"); 
         clearInterval(timer);
     });
