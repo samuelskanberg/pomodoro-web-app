@@ -1,6 +1,13 @@
 $(document).ready(function() {
     console.log("Page loaded");   
 
+    // Check if we should show a warning that the user has not yet accepted notifications
+    if ("Notification" in window) {
+        if (Notification.permission === "default") {
+            $("div#notifications-not-activated").css("display", "block");
+        }
+    }
+
     // Make sure we get permissions for notifications before running the timer :)
     // We only ask if we haven't already asked
     $('a#accept-notifications').click(function(event) {
@@ -10,7 +17,7 @@ $(document).ready(function() {
             if (Notification.permission === "default") {
                 Notification.requestPermission().then(function(p) {
                     if(p === 'granted') {
-                        $('div#notifications-not-activated-warning').hide();
+                        $("div#notifications-not-activated").css("display", "none");
                         var notification = new Notification("Notifications activated");
                     } else {
                         console.log('User blocked notifications.');
