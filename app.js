@@ -81,6 +81,15 @@ $(document).ready(function() {
         audio_element.play();
     }
 
+    function medium_timer_done() {
+        console.log("Medium timer done");
+        $("div#timer-info").html("Medium timer is done");
+        notifyUser("Medium timer is done");
+
+        var audio_element = document.getElementById("timer-sound");
+        audio_element.play();
+    }
+
     function short_timer_done() {
         console.log("Short timer done");
         $("div#timer-info").html("Short timer is done"); 
@@ -113,6 +122,14 @@ $(document).ready(function() {
         $("div#timer-info").html("Long timer is running...");
         limit = 25*60;
         timer_done = long_timer_done;
+        start_timer();
+    });
+
+    $('#medium-timer-button').click(function(event) {
+        event.preventDefault();
+        $("div#timer-info").html("Medium timer is running...");
+        limit = 15*60;
+        timer_done = medium_timer_done;
         start_timer();
     });
 
