@@ -72,10 +72,36 @@ $(document).ready(function() {
         } 
     }
 
+    function call_webhook(message) {
+        if ("slack_webhook" in localStorage) {
+            // On the format https://hooks.slack.com/services/AAAAA/BBBBB/CCCCC
+            // The only thing that has to be set is the webhook
+            var webhook = localStorage["slack_webhook"];
+            var channel = localStorage["slack_channel"] || "#general";
+            var username = localStorage["slack_username"] || "Pomodoro";
+            var icon_emoji = localStorage["slack_icon_emoji"] || ":tomato:";
+
+            console.log("Calling webhook");
+            $.ajax({
+                data: 'payload=' + JSON.stringify({
+                    "text": message,
+                    "channel": channel,
+                    "username": username,
+                    "icon_emoji": icon_emoji
+                }),
+                dataType: 'json',
+                processData: false,
+                type: 'POST',
+                url: webhook
+            });
+        }
+    }
+
     function long_timer_done() {
         console.log("Long timer done");
         $("div#timer-info").html("Long timer is done"); 
         notifyUser("Long timer is done");
+        call_webhook("Long timer is done");
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
@@ -85,6 +111,7 @@ $(document).ready(function() {
         console.log("Medium timer done");
         $("div#timer-info").html("Medium timer is done");
         notifyUser("Medium timer is done");
+        call_webhook("Medium timer is done");
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
@@ -94,6 +121,7 @@ $(document).ready(function() {
         console.log("Short timer done");
         $("div#timer-info").html("Short timer is done"); 
         notifyUser("Short timer is done");
+        call_webhook("Short timer is done");
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
@@ -103,6 +131,7 @@ $(document).ready(function() {
         console.log("Very short timer done");
         $("div#timer-info").html("Very short timer is done");
         notifyUser("Very short timer is done");
+        call_webhook("Very short timer is done");
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
@@ -139,6 +168,7 @@ $(document).ready(function() {
         limit = 5*60;
         timer_done = short_timer_done;
         start_timer();
+
     });
 
     $('#very-short-timer-button').click(function(event) {
