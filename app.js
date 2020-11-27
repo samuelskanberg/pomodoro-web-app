@@ -13,7 +13,7 @@ $(document).ready(function() {
         if ("Notification" in window) {
             if (Notification.permission === "default") {
                 Notification.requestPermission().then(function(p) {
-                    if(p === 'granted') {
+                    if (p === 'granted') {
                         $("div#notifications-not-activated-warning").css("display", "none");
                         var notification = new Notification("Notifications activated");
                     } else {
@@ -27,27 +27,27 @@ $(document).ready(function() {
     });
 
     function notifyUser(message) {
-      // Let's check if the browser supports notifications
-      if (!("Notification" in window)) {
-	console.log("This browser does not support desktop notification");
-      }
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            console.log("This browser does not support desktop notification");
+        }
 
-      // Let's check whether notification permissions have already been granted
-      else if (Notification.permission === "granted") {
-	// If it's okay let's create a notification
-	var notification = new Notification(message);
-      }
+        // Let's check whether notification permissions have already been granted
+        else if (Notification.permission === "granted") {
+            // If it's okay let's create a notification
+            var notification = new Notification(message);
+        }
 
-      // Otherwise, we need to ask the user for permission
-      // This should not be needed since we have already asked in the beginning
-      else if (Notification.permission !== "denied") {
-	Notification.requestPermission().then(function (permission) {
-	  // If the user accepts, let's create a notification
-	  if (permission === "granted") {
-	    var notification = new Notification(message);
-	  }
-	});
-      }
+        // Otherwise, we need to ask the user for permission
+        // This should not be needed since we have already asked in the beginning
+        else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function(permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    var notification = new Notification(message);
+                }
+            });
+        }
     }
 
     var timer;
@@ -56,10 +56,10 @@ $(document).ready(function() {
     var timer_done;
 
     function update_time() {
-        var seconds_left = limit-count;
-        var minutes = Math.floor(seconds_left/60);
+        var seconds_left = limit - count;
+        var minutes = Math.floor(seconds_left / 60);
         var seconds = seconds_left % 60;
-        var time_string = ("0"+minutes).slice(-2)+":"+("0"+seconds).slice(-2);
+        var time_string = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
         $('#time').html(time_string);
     }
 
@@ -69,7 +69,7 @@ $(document).ready(function() {
         if (count >= limit) {
             clearInterval(timer);
             timer_done();
-        } 
+        }
     }
 
     function call_webhook(message) {
@@ -99,12 +99,13 @@ $(document).ready(function() {
 
     function long_timer_done() {
         console.log("Long timer done");
-        $("div#timer-info").html("Long timer is done"); 
+        $("div#timer-info").html("Long timer is done");
         notifyUser("Long timer is done");
         call_webhook("Long timer is done");
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
+        $("body").css("background-color", "lightblue");
     }
 
     function medium_timer_done() {
@@ -115,16 +116,18 @@ $(document).ready(function() {
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
+        $("body").css("background-color", "lightblue");
     }
 
     function short_timer_done() {
         console.log("Short timer done");
-        $("div#timer-info").html("Short timer is done"); 
+        $("div#timer-info").html("Short timer is done");
         notifyUser("Short timer is done");
         call_webhook("Short timer is done");
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
+        $("body").css("background-color", "lightblue");
     }
 
     function very_short_timer_done() {
@@ -135,6 +138,7 @@ $(document).ready(function() {
 
         var audio_element = document.getElementById("timer-sound");
         audio_element.play();
+        $("body").css("background-color", "lightblue");
     }
 
     function start_timer() {
@@ -144,12 +148,13 @@ $(document).ready(function() {
         timer = setInterval(function() {
             add_seconds();
         }, 1000);
+        $("body").css("background-color", "lightsalmon");
     }
 
     $('#long-timer-button').click(function(event) {
         event.preventDefault();
         $("div#timer-info").html("Long timer is running...");
-        limit = 25*60;
+        limit = 25 * 60;
         timer_done = long_timer_done;
         start_timer();
     });
@@ -157,7 +162,7 @@ $(document).ready(function() {
     $('#medium-timer-button').click(function(event) {
         event.preventDefault();
         $("div#timer-info").html("Medium timer is running...");
-        limit = 15*60;
+        limit = 15 * 60;
         timer_done = medium_timer_done;
         start_timer();
     });
@@ -165,7 +170,7 @@ $(document).ready(function() {
     $('#short-timer-button').click(function(event) {
         event.preventDefault();
         $("div#timer-info").html("Short timer is running...");
-        limit = 5*60;
+        limit = 5 * 60;
         timer_done = short_timer_done;
         start_timer();
 
@@ -181,10 +186,11 @@ $(document).ready(function() {
 
     $('#stop-timer-button').click(function(event) {
         event.preventDefault();
-        $("div#timer-info").html("Timer is stopped"); 
+        $("div#timer-info").html("Timer is stopped");
         clearInterval(timer);
         count = limit;
         update_time();
+        $("body").css("background-color", "white");
     });
 
     $('#show-time-button').click(function(event) {
